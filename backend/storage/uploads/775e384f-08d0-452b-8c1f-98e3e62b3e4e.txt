@@ -1,0 +1,46 @@
+==============================================================================
+TÜRKÇE AGENTIC RAG (RETRIEVAL-AUGMENTED GENERATION) TEST VERİ SETİ
+==============================================================================
+
+[BÖLÜM 1: BİLGİ METİNLERİ / DOKÜMANLAR]
+
+--- DOKÜMAN 1: İstanbul'un Tarihi ve Coğrafyası ---
+İstanbul, Asya ve Avrupa kıtalarını birbirine bağlayan dünyadaki tek metropoldür. Marmara Bölgesi'nde yer alan şehir, Boğaziçi (İstanbul Boğazı) ile ikiye ayrılır. Tarih boyunca Roma, Bizans ve Osmanlı imparatorluklarına başkentlik yapmıştır. 1453 yılında Fatih Sultan Mehmet tarafından fethedilen şehir, tarihi Yarımada'da bulunan Ayasofya, Topkapı Sarayı ve Sultanahmet Camii gibi simge yapılarıyla ünlüdür. Günümüzde Türkiye'nin finans, kültür ve ekonomi merkezidir.
+
+--- DOKÜMAN 2: Türk Kahvesi Kültürü ---
+Türk kahvesi, İnce çekilmiş kahve çekirdeklerinin cezvede su ve isteğe bağlı şeker ile pişirilmesiyle hazırlanan geleneksel bir içecektir. 16. yüzyılda Osmanlı saray mutfağında yaygınlaşan kahve, telvesiyle servis edilen tek kahve türüdür. UNESCO tarafından 2013 yılında Somut Olmayan Kültürel Miras Listesi'ne dahil edilmiştir. "Bir fincan kahvenin kırk yıl hatırı vardır" atasözü, Türk kültüründe kahvenin dostluk ve misafirperverlik sembolü olduğunu gösterir.
+
+--- DOKÜMAN 3: Yapay Zeka ve Doğal Dil İşleme (NLP) ---
+Doğal Dil İşleme (NLP), bilgisayarların insan dilini anlama, yorumlama ve üretme yeteneğini inceleyen yapay zeka alt dalıdır. Türkçe, sondan eklemeli (agglutinative) bir dil yapısına sahip olduğu için NLP modellemelerinde özel zorluklar sunar. Kök ve ek ayrışımı, zengin dil bilgisi kuralları ve serbest kelime dizilimi Türkçe için geliştirilen büyük dil modellerinin (LLM) optimize edilmesini gerektirir. RAG (Arama Destekli Üretim) sistemleri, harici bilgi kaynaklarını kullanarak dil modellerinin doğru ve güncel yanıtlar vermesini sağlar.
+
+--- DOKÜMAN 4: Göbeklitepe ---
+Şanlıurfa yakınlarında bulunan Göbeklitepe, M.Ö. 9600-9500 yıllarına tarihlenen bilinen en eski tapınak kompleksidir. Yerleşik hayata geçiş ve tarımın başlangıcından öncesine dayanan yapısıyla insanlık tarihi hakkındaki ezberleri bozmuştur. T şeklindeki devasa taş sütunlar üzerinde hayvan figürleri kabartma olarak işlenmiştir. Göbeklitepe, 2018 yılında UNESCO Dünya Miras Listesi'ne alınmıştır.
+
+--- DOKÜMAN 5: Python Programlama Dili ---
+Python, 1991 yılında Guido van Rossum tarafından geliştirilmiş yüksek seviyeli bir programlama dilidir. Sözdiziminin sadeliği, okunabilirliği ve geniş kütüphane ekosistemi sayesinde veri bilimi, yapay zeka, web geliştirme ve otomasyon alanlarında yaygın olarak kullanılmaktadır. Pandas, NumPy, PyTorch ve LangChain gibi kütüphaneler Python'ı veri analizi ve RAG uygulamaları geliştirmede birinci tercih haline getirmiştir.
+
+==============================================================================
+
+[BÖLÜM 2: TEST SORULARI / RAG EVALUATION QUESTIONS]
+
+Kategori A: Doğrudan Bilgi Çıkarma (Fact Extraction)
+1. İstanbul hangi yılda ve kim tarafından fethedilmiştir?
+2. Türk kahvesi UNESCO Somut Olmayan Kültürel Miras Listesi'ne hangi yılda dahil edilmiştir?
+3. Göbeklitepe hangi ilimizde yer almaktadır ve yaklaşık hangi tarihe dayanmaktadır?
+4. Python programlama dili kim tarafından ve ne zaman geliştirilmiştir?
+
+Kategori B: Nedensellik ve Analiz (Reasoning & Analysis)
+5. Türkçenin dil yapısı (sondan eklemeli olması) Doğal Dil İşleme (NLP) çalışmalarında ne tür zorluklar yaratmaktadır?
+6. Türk kahvesinin sunumunu ve hazırlanışını diğer kahve türlerinden ayıran temel özellik nedir?
+
+Kategori C: Karşılaştırma ve Çoklu Doküman Soruları (Multi-hop Queries)
+7. Metinlerde bahsedilen UNESCO Dünya Mirası veya Kültürel Miras listesindeki unsurlar nelerdir ve hangi yıllarda eklenmişlerdir?
+8. İstanbul ve Göbeklitepe'nin tarihsel önemlerini karşılaştırınız.
+
+Kategori D: Doğruluk/Yanlışlık Testi (True/False & Hallucination Test)
+9. Göbeklitepe tarımın gelişmesinden sonra mı inşa edilmiştir? (Metne göre cevaplayınız)
+10. Python dili ilk olarak web geliştirme amacıyla mı tasarlandı, yoksa genel amaçlı sadeliğiyle mi tanınmıştır?
+
+Kategori E: Özetleme ve Sentez (Summarization)
+11. Verilen metinlere dayanarak Türkiye'nin tarihi ve kültürel zenginliklerini özetleyen kısa bir paragraf yazınız.
+12. RAG (Arama Destekli Üretim) mimarisinin yapay zeka ve dil modellerindeki amacını açıklayınız.

@@ -1,0 +1,28 @@
+# =====================================================================
+#  Dockerfile.backend - FastAPI + uvicorn backend for the Agentic-RAG app
+#
+#  This replaces running:  uvicorn main_rag:app --reload
+# =====================================================================
+
+# Use Python 3.12 to match your local dev environment.
+FROM python:3.12-slim
+
+# Do not write .pyc files, do not buffer Python logs.
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
+WORKDIR /app
+
+# Install Python dependencies first (helps Docker layer caching).
+COPY reqs.txt ./
+RUN pip install --no-cache-dir -r reqs.txt
+
+# Copy the whole application source into the image.
+COPY . .
+
+# Port the FastAPI app is served on.
+EXPOSE 8000
+
+# Exactly the command you were running manually, but inside the container.
+# 0.0.0.0 is required so the host machine can reach the container.
+CMD ["uvicorn", "main_rag:app", "--reload", "--host", "0.0.0.0", "--port", "8000"]

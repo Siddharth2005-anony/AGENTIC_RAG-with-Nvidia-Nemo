@@ -1,0 +1,29 @@
+# Python artifacts
+__pycache__/
+**/__pycache__/
+*.py[cod]
+
+# Frontend / JS (keep the backend build context small)
+node_modules/
+**/node_modules/
+frontend-rag/
+
+# Local vector databases (bind-mounted at runtime, not needed in the image)
+demo.db
+demo1.db
+
+# Secrets - inject via docker-compose env_file instead of baking into image
+.env
+
+# Project docs / config clutter in the image
+tests/
+*.md
+.dockerignore
+Dockerfile*
+docker-compose.yml
+.gitignore
+
+# Git / local tooling
+.git/
+.venv/
+venv/

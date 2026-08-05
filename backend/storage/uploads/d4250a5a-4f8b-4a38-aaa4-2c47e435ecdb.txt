@@ -1,0 +1,20 @@
+Python is a programming language.
+
+Redis is an in-memory database.
+
+LangGraph is used for building AI agents.
+
+NVIDIA NeMo Retriever provides enterprise retrieval.
+
+FastAPI is commonly used for serving AI applications.
+
+ 
+
+
+
+
+
+
+
+
+
