@@ -9,7 +9,7 @@ class Embedder:
 
     def __init__(self):
         self.embedding_model = NVIDIAEmbeddings(
-            model="nvidia/llama-nemotron-embed-1b-v2",
+            model="nvidia/nemotron-3-embed-1b",
             api_key=os.getenv("NVIDIA_API_KEY")
         )
 

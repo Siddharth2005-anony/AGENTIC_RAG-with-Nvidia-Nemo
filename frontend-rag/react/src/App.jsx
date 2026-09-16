@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import About from "./About";
 import "./App.css";
@@ -19,6 +19,9 @@ function App() {
   const [uploading, setUploading] = useState(false);
   const [uploadStatus, setUploadStatus] = useState("");
   const [isThinking, setIsThinking] = useState(false);
+  const [loadingCollections, setLoadingCollections] = useState(false);
+  const [deletingCollection, setDeletingCollection] = useState("");
+  const [collectionStatus, setCollectionStatus] = useState("");
 
   const fileInputRef = useRef(null);
 
@@ -78,12 +81,49 @@ function App() {
     }
   };
 
-  const getCollections = async () => {
+  const getCollections = async (showLoading = true) => {
+    if (showLoading) setLoadingCollections(true);
     try {
       const res = await axios.get(`${API}/collections`);
       setCollections(res.data);
+      setCollectionStatus("");
     } catch (err) {
       console.log(err);
+      setCollectionStatus("Unable to load collections. Check the backend connection.");
+    } finally {
+      setLoadingCollections(false);
+    }
+  };
+
+  useEffect(() => {
+    const initialLoad = window.setTimeout(() => getCollections(false), 0);
+
+    return () => window.clearTimeout(initialLoad);
+  }, []);
+
+  const deleteCollection = async (collectionName) => {
+    const confirmed = window.confirm(
+      `Delete the collection "${collectionName}"? This permanently removes its stored vectors.`
+    );
+
+    if (!confirmed) return;
+
+    setDeletingCollection(collectionName);
+    setCollectionStatus("");
+
+    try {
+      await axios.delete(`${API}/collections/${encodeURIComponent(collectionName)}`);
+      setCollections((current) => current.filter((item) => item !== collectionName));
+      setCollectionStatus(`Deleted collection "${collectionName}".`);
+    } catch (err) {
+      console.log(err);
+      setCollectionStatus(
+        `Unable to delete "${collectionName}": ${
+          err.response?.data?.detail || err.message
+        }`
+      );
+    } finally {
+      setDeletingCollection("");
     }
   };
 
@@ -222,22 +262,50 @@ function App() {
                     <p className="panel-kicker">Storage</p>
                     <h2>Collections</h2>
                   </div>
-                  <button type="button" className="secondary-button" onClick={getCollections}>
-                    Refresh
+                  <button
+                    type="button"
+                    className="secondary-button"
+                    onClick={getCollections}
+                    disabled={loadingCollections || Boolean(deletingCollection)}
+                  >
+                    {loadingCollections ? "Loading..." : "Refresh"}
                   </button>
                 </div>
 
                 <div className="collection-list">
                   {collections.length > 0 ? (
-                    collections.map((item, index) => (
-                      <div className="collection-chip" key={`${item}-${index}`}>
-                        {item}
+                    collections.map((item) => (
+                      <div className="collection-row" key={item}>
+                        <span className="collection-name">{item}</span>
+                        <button
+                          type="button"
+                          className="delete-button"
+                          onClick={() => deleteCollection(item)}
+                          disabled={Boolean(deletingCollection)}
+                          aria-label={`Delete collection ${item}`}
+                        >
+                          {deletingCollection === item ? "Deleting..." : "Delete"}
+                        </button>
                       </div>
                     ))
                   ) : (
-                    <p className="empty-copy">No collections loaded yet.</p>
+                    <p className="empty-copy">
+                      {loadingCollections ? "Loading collections..." : "No collections available."}
+                    </p>
                   )}
                 </div>
+
+                {collectionStatus && (
+                  <div
+                    className={`feedback-banner ${
+                      collectionStatus.startsWith("Unable")
+                        ? "feedback-error"
+                        : "feedback-ok"
+                    }`}
+                  >
+                    {collectionStatus}
+                  </div>
+                )}
               </div>
             </aside>
 

@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException, Path
 from pydantic import BaseModel
 
 from intelligence.embedder import Embedder
@@ -49,10 +49,37 @@ def get_collections():
     return mv_db.list()
 
 
+@router.delete("/collections/{collection_name}")
+def delete_collection(
+    collection_name: str = Path(..., min_length=1, max_length=255),
+):
+    """Delete one available Milvus collection by name."""
+    try:
+        result = mv_db.delete(collection_n=collection_name)
+    except Exception as exc:
+        raise HTTPException(
+            status_code=500,
+            detail="The collection could not be deleted.",
+        ) from exc
+
+    if result["msg"] == "collection does not exist":
+        raise HTTPException(
+            status_code=404,
+            detail=f"Collection '{collection_name}' was not found.",
+        )
+
+    return {
+        "status": "success",
+        "collection": collection_name,
+        "message": "Collection deleted successfully.",
+    }
+
+
 @router.get("/documents/{n}")
 def get_docs(n: int):
     return mv_db.query(f"id == {n}")
 
 @router.delete("/del_col")
 def del_coll(collection_n1:str):
+    """Keep the original endpoint available for existing clients."""
     return mv_db.delete(collection_n=collection_n1)
